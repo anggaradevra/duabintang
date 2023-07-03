@@ -45,12 +45,22 @@
                     <div class="valid-feedback">Alamat Valid</div>
 	                  <div class="invalid-feedback">Maaf, Alamat tidak boleh kosong !</div>
                   </div>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                     <label for="produk" class="form-label">Produk</label>
                     <input type="text" name="produk" class="form-control" id="produk" required>
                     <div class="valid-feedback">Nama Produk Valid</div>
 	                  <div class="invalid-feedback">Maaf, Nama Produk tidak boleh kosong !</div>
-                  </div>
+                  </div> -->
+
+                  <div class="form-group">
+                    <label for="produk">Produk</label>
+                    <select type="text" class="form-control" name="produk" id="produk" required>
+                    @foreach  ($dataproduk as $row)
+                    <option value="{{ $row->produk }}">{{ $row->produk }}</option>
+                    @endforeach
+                    </select>
+                </div>
+
                   <div class="mb-3">
                     <label for="jumlahstok" class="form-label">Jumlah Stok</label>
                     <input type="number" name="jumlah_stok" class="form-control" id="jumlahstok" required>

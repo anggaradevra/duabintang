@@ -26,11 +26,51 @@
     <div class="row g-3 align-items-center mt-2">
       <div class="col-auto">
         <form action="/rms" method="GET">
-          <input type="search" id="inputPassword6" name="search" class="form-control">
+          <input type="search" id="inputPassword6" name="search" class="form-control" placeholder="search">
         </form>
       </div>
+      <div class="col-auto">
       <a type="button" href="/exportpdf" class="btn btn-danger">Export PDF</a>
     </div>
+      <div class="col-auto">
+      <a type="button" href="/exportexcel" class="btn btn-success ml-1">Export Excel</a>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Import Data
+      </button>
+    </div>
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/importexcel" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="file" name="file" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
         <div class="row mt-2">
             @if ($message = Session::get('success'))
                 <div class="alert alert-success" role="alert">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_customer');
             $table->biginteger('no_wa');
             $table->string('alamat');
-            $table->string('produk');
+            $table->integer('produk');
             $table->integer('jumlah_stok');
             $table->integer('penjualan');
             $table->string('foto_customer');

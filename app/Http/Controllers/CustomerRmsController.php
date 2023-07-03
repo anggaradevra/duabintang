@@ -1,10 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use Barryvdh\DomPDF\PDF;
 use App\Models\Users;
-use Barryvdh\DomPDF\PDF;
 use App\Models\Customer_rms;
 use Illuminate\Http\Request;
+use App\Exports\CustomerRmsExport;
+use App\Imports\CustomerRmsImport;
+use App\Models\produkrms;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerRmsController extends Controller
 {
@@ -20,7 +27,8 @@ class CustomerRmsController extends Controller
     }
 
     public function tambahrms(){
-        return view('tambahrms');
+        $dataproduk = produkrms::all();
+        return view('tambahrms', compact('dataproduk'));
     }
 
     public function insertdatarms(Request $request){
@@ -63,6 +71,20 @@ class CustomerRmsController extends Controller
         view()->share('data', $data);
         $pdf = PDF::loadview('datarms-pdf');
         $pdf->setpaper('A4', 'landscape');
-        return $pdf->stream('datarms.pdf');
+        return $pdf->download('datarms.pdf');
+    }
+
+    public function exportexcel(){
+        return Excel::download(new CustomerRmsExport, 'customer_rms.xlsx');
+    }
+
+    public function importexcel(Request $request){
+        $data = $request->file('file');
+
+        $namafile = $data->getClientOriginalName();
+        $data->move('DataCustomer_rms', $namafile);
+
+        Excel::import(new CustomerRmsImport, \public_path('/DataCustomer_rms/'. $namafile));
+        return \redirect()->back();
     }
 }
